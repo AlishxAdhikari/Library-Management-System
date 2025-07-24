@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Help | Book Record Management</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      z-index: -1;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #D96F32 0%, #e67e22 50%, #3498db 100%);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+    }
+
+    .navbar-brand, .nav-link {
+      color: #fff !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: #ffd700 !important;
+    }
+
+    .help-section {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .help-section h1 {
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    .help-section p {
+      font-size: 1.1rem;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .faq {
+      margin-top: 3rem;
+    }
+
+    .faq h4 {
+      color: #34495e;
+      margin-top: 1.5rem;
+    }
+
+    .faq p {
+      color: #555;
+    }
+
+    .btn-contact {
+      margin-top: 2rem;
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 0.5rem 1.5rem;
+    }
+
+    .btn-contact:hover {
+      background: linear-gradient(45deg, #2980b9, #1f618d);
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">📚 Book Record Management</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/add-book">Add Book</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about/">About us</a></li>
+        <li class="nav-item active"><a class="nav-link" href="#">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="help-section">
+    <h1>Need Help?</h1>
+    <p>We’re here to assist you! Whether you're adding, editing, or deleting books, this page will help guide you through the process. Below you'll find frequently asked questions and helpful tips for using the Book Record Management system.</p>
+
+    <div class="faq">
+      <h4>📘 How do I add a new book?</h4>
+      <p>Go to the "Add Book" section from the navigation menu. Fill in the title, price, and other required information, then click "Submit".</p>
+
+      <h4>📝 How can I edit a book entry?</h4>
+      <p>Click the "Edit" button next to the book you want to change. Modify the details and save your changes.</p>
+
+      <h4>❌ How do I delete a book?</h4>
+      <p>Click the "Delete" button next to the book. A confirmation may appear. Once confirmed, the book will be permanently removed.</p>
+
+      <h4>🔍 How does the search work?</h4>
+      <p>Enter the book title in the search bar at the top. The list will filter based on your search input.</p>
+
+      <h4>💡 What if I encounter an error?</h4>
+      <p>Try refreshing the page or checking if all required fields are filled. If the issue continues, contact the developer.</p>
+
+      <button class="btn btn-contact">Contact Developer</button>
+    </div>
+  </div>
+
+  <!-- JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Background Switcher Script -->
+  <script>
+    const images = [
+      "{% static 'images/lib0.jpg' %}",
+      "{% static 'images/lib1.jpeg' %}",
+      "{% static 'images/lib2.jpeg' %}",
+      "{% static 'images/lib3.jpg' %}"
+    ];
+
+    function changeBackground() {
+      const bg = images[Math.floor(Math.random() * images.length)];
+      document.body.style.backgroundImage = `url('${bg}')`;
+    }
+
+    changeBackground();
+    setInterval(changeBackground, 20000);
+  </script>
+</body>
+</html>
