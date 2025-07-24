@@ -24,8 +24,9 @@ from .views import viewBook, edit_book
 urlpatterns = [
    path('', home, name='home'),
    path('view-book/', viewBook, name='view-book'),
-   path('add-book/',addBookView),
-   path("add-book/add/", addBook),
+   path('add-book/',addBookView, name='add_book_view'),
+   path("add-book/add/", addBook, name='add_book'),
+
 
    path("edit-book/edit/", edit_book),
   path('edit-book/delete/', deleteBook, name='delete-book'),

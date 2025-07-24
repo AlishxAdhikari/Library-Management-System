@@ -42,6 +42,10 @@
       color: #ffffff !important;
     }
 
+    .nav-item {
+      margin-right: 1.5rem; /* Added spacing between navbar items */
+    }
+
     .nav-link {
       color: #ffffff !important;
       font-weight: 500;
@@ -79,27 +83,6 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
 
-    .form-inline .form-control {
-      border-radius: 25px;
-      border: none;
-      padding: 0.5rem 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-inline .btn {
-      border-radius: 25px;
-      background: linear-gradient(45deg, #f1c40f, #f39c12);
-      border: none;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    .form-inline .btn:hover {
-      transform: translateY(-2px);
-      background: linear-gradient(45deg, #e67e22, #d35400);
-    }
-
     .container {
       max-width: 800px;
       margin-top: 5rem;
@@ -131,6 +114,43 @@
     .btn-primary:hover {
       background: linear-gradient(45deg, #2980b9, #1f618d);
       transform: translateY(-2px);
+    }
+
+    .card-section, .nav-card-section {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .card-text {
+      color: #34495e;
+    }
+
+    .card-body {
+      padding: 1.5rem;
     }
   </style>
 </head>
@@ -175,22 +195,112 @@
           </div>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0" action="{% url 'view-book' %}" method="get">
-        <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search books by title or author"
-          aria-label="Search" value="{{ request.GET.q }}">
-        <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
   </nav>
   <div class="container">
     <h1>Welcome to Book Record Management</h1>
     <p>Manage your book collection with ease. View, add, edit, or delete books.</p>
-    <a href="{% url 'view-book' %}" class="btn btn-primary">View All Books</a>
-    {% if user.is_authenticated %}
-    <a href="{% url 'add_book_view' %}" class="btn btn-primary">Add a New Book</a>
-    {% else %}
-    <a href="{% url 'login' %}" class="btn btn-primary">Login to Manage Books</a>
-    {% endif %}
+  </div>
+  <div class="card-section">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/tab1.png' %}" class="card-img-top" alt="Classic Literature">
+          <div class="card-body">
+            <h5 class="card-title">Classic Literature</h5>
+            <p class="card-text">Explore timeless classics that have shaped literary history.</p>
+            <a href="{% url 'view-book' %}" class="btn btn-primary">Browse Classics</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/MODERN.png' %}" class="card-img-top" alt="Modern Fiction">
+          <div class="card-body">
+            <h5 class="card-title">Modern Fiction</h5>
+            <p class="card-text">Dive into contemporary stories that captivate and inspire.</p>
+            <a href="{% url 'view-book' %}" class="btn btn-primary">Discover Fiction</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/tab3.jpg' %}" class="card-img-top" alt="Non-Fiction">
+          <div class="card-body">
+            <h5 class="card-title">Non-Fiction</h5>
+            <p class="card-text">Gain knowledge with our collection of insightful non-fiction.</p>
+            <a href="{% url 'view-book' %}" class="btn btn-primary">Explore Non-Fiction</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-card-section">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/tab4.jpg' %}" class="card-img-top" alt="View All Books">
+          <div class="card-body">
+            <h5 class="card-title">View All Books</h5>
+            <p class="card-text">Browse your entire book collection in one place.</p>
+            <a href="{% url 'view-book' %}" class="btn btn-primary">View Books</a>
+          </div>
+        </div>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/tab5.jpg' %}" class="card-img-top" alt="Add a New Book">
+          <div class="card-body">
+            <h5 class="card-title">Add a New Book</h5>
+            <p class="card-text">Expand your collection by adding new books.</p>
+            <a href="{% url 'add_book_view' %}" class="btn btn-primary">Add Book</a>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/tab6.webp' %}" class="card-img-top" alt="Login">
+          <div class="card-body">
+            <h5 class="card-title">Login to Manage</h5>
+            <p class="card-text">Sign in to manage your book collection.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/contactus.jpg' %}" class="card-img-top" alt="About Us">
+          <div class="card-body">
+            <h5 class="card-title">About Us</h5>
+            <p class="card-text">Learn more about our mission and team.</p>
+            <a href="{% url 'about' %}" class="btn btn-primary">About Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/CONTACTUS.jpg' %}" class="card-img-top" alt="Contact">
+          <div class="card-body">
+            <h5 class="card-title">Contact</h5>
+            <p class="card-text">Get in touch with us for support or inquiries.</p>
+            <a href="{% url 'contact' %}" class="btn btn-primary">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{% static 'images/help.jpg' %}" class="card-img-top" alt="Help">
+          <div class="card-body">
+            <h5 class="card-title">Help</h5>
+            <p class="card-text">Find answers to common questions and guides.</p>
+            <a href="{% url 'help' %}" class="btn btn-primary">Help</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
