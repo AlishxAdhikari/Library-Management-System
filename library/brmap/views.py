@@ -4,13 +4,16 @@ from .models import Book
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, "home.html")  # Render home.html
 
+@login_required
 def addBookView(request):
     return render(request, "addbook.html")
 
+@login_required
 def addBook(request):
     if request.method == "POST":
         title = request.POST.get("title")
@@ -40,6 +43,7 @@ def addBook(request):
         messages.success(request, "Book added successfully")
         return redirect('view-book')
 
+@login_required
 def edit_book(request):
     if request.method == "GET":
         book_id = request.GET.get('id')
@@ -89,7 +93,7 @@ def edit_book(request):
             return redirect('view-book')
 
     return redirect('view-book')
-
+@login_required
 def deleteBook(request):
     book_id = request.GET.get('id')
     if not book_id:
@@ -134,7 +138,7 @@ def user_logout(request):
 def viewBook(request):
     query = request.GET.get('q')
     if query:
-        books = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+        books = Book.objects.filter(title__icontains=query)
     else:
         books = Book.objects.all()
     return render(request, 'viewbook.html', {'books': books})
