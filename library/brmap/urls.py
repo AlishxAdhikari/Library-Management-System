@@ -28,7 +28,8 @@ urlpatterns = [
    path("add-book/add/", addBook, name='add_book'),
 
 
-   path("edit-book/edit/", edit_book),
+  path("edit-book/edit/", edit_book, name='edit_book'),
+
   path('edit-book/delete/', deleteBook, name='delete-book'),
   path('about/', aboutView, name='about'),
   path('help/', helpview, name='help'),
