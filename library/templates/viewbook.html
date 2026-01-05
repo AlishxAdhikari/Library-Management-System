@@ -26,12 +26,6 @@
       transition: all 0.3s ease;
     }
 
-    .data-card {
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-    }
-
     .custom-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
     .custom-table tr { transition: all 0.3s ease; }
     .custom-table tbody tr { background: rgba(255, 255, 255, 0.02); }
@@ -47,8 +41,6 @@
     }
 
     .dropdown:hover .dropdown-menu { display: block; }
-
-    /* For neat scrolling in table on mobile */
     .table-container { overflow-x: auto; scrollbar-width: thin; }
   </style>
 </head>
@@ -68,23 +60,12 @@
       <a href="{% url 'view-book' %}" class="flex items-center space-x-3 p-3 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-600/20 transition">
         <span>📚 Browse Catalog</span>
       </a>
-      <a href="{% url 'add_book_view' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition">
+      <a href="{% url 'add_book' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition">
         <span>➕ Add New Volume</span>
       </a>
       <a href="{% url 'about' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition">
         <span>ℹ️ About Archive</span>
       </a>
-      
-      <div class="relative dropdown pt-4 border-t border-white/5">
-        <button class="flex items-center justify-between w-full p-3 rounded-xl hover:bg-white/5 transition">
-          <span>📂 More Tools</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-        </button>
-        <div class="hidden dropdown-menu absolute left-full top-0 ml-2 w-48 bg-slate-900 border border-white/10 rounded-xl shadow-xl p-2 z-50">
-          <a href="{% url 'contact' %}" class="block p-2 hover:bg-indigo-600 rounded-lg transition text-xs">Contact Support</a>
-          <a href="{% url 'help' %}" class="block p-2 hover:bg-indigo-600 rounded-lg transition text-xs mt-1">System Help</a>
-        </div>
-      </div>
     </nav>
 
     <div class="mt-auto pt-6 border-t border-white/5">
@@ -96,8 +77,6 @@
           <a href="{% url 'logout' %}" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase tracking-wider transition">Logout</a>
         </div>
       </div>
-      {% else %}
-      <a href="{% url 'login' %}" class="flex items-center justify-center w-full bg-white text-black py-3 rounded-xl font-bold text-xs hover:bg-indigo-500 hover:text-white transition">SIGN IN</a>
       {% endif %}
     </div>
   </aside>
@@ -108,29 +87,30 @@
       <div class="flex-1 max-w-xl">
         <form action="{% url 'view-book' %}" method="get" class="search-bar rounded-xl px-4 py-2 flex items-center space-x-3">
           <span class="text-slate-500 text-sm">🔍</span>
-          <input type="search" name="q" value="{{ request.GET.q }}" placeholder="Search by title..." class="bg-transparent border-none outline-none text-sm w-full placeholder:text-slate-600 text-white">
-          <button type="submit" class="hidden">Search</button>
+          <input type="search" name="q" value="{{ request.GET.q }}" placeholder="Search by title..." class="bg-transparent border-none outline-none text-sm w-full text-white">
         </form>
       </div>
       
       <div class="ml-4 flex items-center">
-        <a href="{% url 'add_book_view' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:bg-indigo-500 transition-all flex items-center">
+        <a href="{% url 'add_book' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:bg-indigo-500 transition-all flex items-center">
             <span class="mr-2">+</span> NEW ENTRY
         </a>
       </div>
     </header>
 
     <div class="p-8 lg:p-12">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="mb-6 p-4 rounded-2xl border text-xs font-bold flex items-center transition-all animate-pulse
+            {% if message.tags == 'success' %} bg-emerald-500/10 border-emerald-500/20 text-emerald-400 {% else %} bg-red-500/10 border-red-500/20 text-red-400 {% endif %}">
+            <span class="mr-2">{% if message.tags == 'success' %}✅{% else %}⚠️{% endif %}</span> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       <div class="mb-10" data-aos="fade-down">
         <h1 class="text-4xl font-black tracking-tight mb-2">Collection <span class="text-gradient">Archive</span></h1>
         <p class="text-slate-500 text-sm">System Database: Managing {{ books|length }} registered volumes.</p>
-        
-        {% if request.GET.q %}
-        <div class="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs">
-          Filtering: <span class="font-bold ml-1">"{{ request.GET.q }}"</span>
-          <a href="{% url 'view-book' %}" class="ml-2 text-slate-400 hover:text-white">✕</a>
-        </div>
-        {% endif %}
       </div>
 
       <div class="table-container" data-aos="fade-up">
@@ -140,7 +120,6 @@
               <th class="px-6 py-4">ID</th>
               <th class="px-6 py-4">Book Metadata</th>
               <th class="px-6 py-4">Valuation</th>
-              <th class="px-6 py-4">Registration</th>
               <th class="px-6 py-4">Due Date</th>
               <th class="px-6 py-4 text-right">Administrative Actions</th>
             </tr>
@@ -154,30 +133,26 @@
                 <div class="text-[10px] text-slate-500 uppercase tracking-tighter">{{ book.author }}</div>
               </td>
               <td class="px-6 py-4 font-semibold">Rs. {{ book.price }}</td>
-              <td class="px-6 py-4 text-slate-400">{{ book.received_date|date:"M d, Y" }}</td>
               <td class="px-6 py-4">
-                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[10px]">
-                  {{ book.return_date|date:"M d, Y" }}
+                <span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-400">
+                  {{ book.return_date|date:"M d, Y"|default:"No Date" }}
                 </span>
               </td>
               <td class="px-6 py-4 text-right">
                 <div class="flex justify-end space-x-2">
-                  <a href="/edit-book/edit/?id={{ book.id }}" class="p-2 rounded-lg hover:bg-indigo-600 transition group" title="Edit">
+                  <a href="{% url 'edit_book' %}?id={{ book.id }}" class="p-2 rounded-lg hover:bg-indigo-600 transition group" title="Edit">
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                   </a>
-                  <form action="/edit-book/delete/" method="post" class="inline">
-                    {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ book.id }}">
-                    <button type="submit" onclick="return confirm('Archive deletion is permanent. Continue?');" class="p-2 rounded-lg hover:bg-rose-600 transition group">
-                      <svg class="w-4 h-4 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    </button>
-                  </form>
+                  
+                  <a href="{% url 'delete-book' %}?id={{ book.id }}" class="p-2 rounded-lg hover:bg-rose-600 transition group" title="Delete">
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                  </a>
                 </div>
               </td>
             </tr>
             {% empty %}
             <tr>
-              <td colspan="6" class="px-6 py-20 text-center text-slate-500 italic">
+              <td colspan="5" class="px-6 py-20 text-center text-slate-500 italic">
                 <div class="text-4xl mb-4">📂</div>
                 No records detected in this sector.
               </td>
@@ -187,14 +162,6 @@
         </table>
       </div>
     </div>
-
-    <footer class="mt-auto py-8 px-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">
-      <p>&copy; 2026 LibPro Institutional Repository</p>
-      <div class="flex space-x-8 mt-4 md:mt-0">
-        <a href="{% url 'contact' %}" class="hover:text-white transition">Contact</a>
-        <a href="{% url 'help' %}" class="hover:text-white transition">Help Desk</a>
-      </div>
-    </footer>
   </main>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

@@ -11,7 +11,9 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    return render(request, "home.html")  # Render home.html
+    # This sends the list of books to index.html so it can count them automatically
+    all_books = Book.objects.all()
+    return render(request, 'home.html', {'books': all_books}) # Render home.html
 
 @login_required
 def addBookView(request):
