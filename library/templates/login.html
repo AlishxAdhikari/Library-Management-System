@@ -4,145 +4,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Book Record Management</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>System Access | LibPro LMS</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #020617;
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
       min-height: 100vh;
-      position: relative;
-      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0;
+      overflow: hidden;
+      transition: background-image 1.5s ease-in-out;
     }
 
-    body::before {
-      content: "";
+    .overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: inherit;
-      filter: blur(8px);
-      z-index: -1;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.4) 0%, rgba(2, 6, 23, 0.9) 100%);
+      z-index: 1;
     }
 
-    .login-container {
-      max-width: 450px;
-      width: 100%;
-      margin: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      transition: transform 0.3s ease;
+    .login-glass {
+      position: relative;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
-    .login-container:hover {
-      transform: translateY(-5px);
-    }
-
-    .login-container h2 {
-      margin-bottom: 2rem;
-      font-weight: 700;
-      color: #2c3e50;
-      text-align: center;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group label {
-      font-weight: 500;
-      color: #34495e;
-    }
-
-    .form-control {
-      border-radius: 10px;
-      border: 1px solid #dcdcdc;
-      padding: 0.75rem;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-control:focus {
-      border-color: #3498db;
-      box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
-    }
-
-    .btn-login {
-      width: 100%;
-      border-radius: 25px;
-      padding: 0.75rem;
-      background: linear-gradient(45deg, #3498db, #2980b9);
-      border: none;
-      font-weight: 600;
+    .input-field {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: white;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: all 0.3s ease;
     }
 
-    .btn-login:hover {
-      background: linear-gradient(45deg, #2980b9, #1f618d);
-      transform: scale(1.02);
+    .input-field:focus {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+      outline: none;
     }
 
-    .alert {
-      margin-top: 1rem;
-      border-radius: 10px;
-      font-size: 0.9rem;
+    .btn-access {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      box-shadow: 0 10px 20px -10px #6366f1;
+      transition: all 0.3s ease;
     }
 
-    .forgot-password {
-      text-align: center;
-      margin-top: 1rem;
+    .btn-access:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -10px #6366f1;
+      filter: brightness(1.1);
     }
 
-    .forgot-password a {
-      color: #3498db;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: color 0.3s ease;
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .forgot-password a:hover {
-      color: #1f618d;
-      text-decoration: underline;
+    .animate-login {
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login to Your Library</h2>
+  <div class="overlay"></div>
+
+  <div class="login-glass w-full max-w-md p-10 mx-4 animate-login">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl mb-6 shadow-xl shadow-indigo-500/20">
+        <span class="text-2xl font-black text-white">L</span>
+      </div>
+      <h2 class="text-3xl font-black tracking-tighter text-white mb-2">Internal Access</h2>
+      <p class="text-slate-400 text-sm font-medium tracking-wide">Enter credentials to unlock repository.</p>
+    </div>
 
     {% if messages %}
       {% for message in messages %}
-        <div class="alert alert-danger">{{ message }}</div>
+        <div class="message-item mb-6 p-4 rounded-xl border flex items-center italic text-xs font-bold transition-all duration-500
+          {% if message.tags == 'success' %}
+            bg-emerald-500/10 border-emerald-500/20 text-emerald-400
+          {% else %}
+            bg-red-500/10 border-red-500/20 text-red-400
+          {% endif %}">
+          <span class="mr-2">
+            {% if message.tags == 'success' %}✅{% else %}⚠️{% endif %}
+          </span> 
+          {{ message }}
+        </div>
       {% endfor %}
     {% endif %}
 
-    <form method="POST">
+    <form method="POST" class="space-y-4">
       {% csrf_token %}
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required>
+      
+      <div>
+        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 ml-1">Archive ID / Username</label>
+        <input type="text" name="username" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="Enter username" required>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
+
+      <div>
+        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 ml-1">Security Key / Password</label>
+        <input type="password" name="password" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="••••••••" required>
       </div>
-      <button type="submit" class="btn btn-login">Login</button>
+
+      <div class="pt-4 space-y-3">
+        <button type="submit" class="btn-access w-full py-4 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em]">
+          Authorize Connection
+        </button>
+        
+        <a href="{% url 'register' %}" class="block w-full py-4 text-center rounded-2xl border border-white/10 text-white font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-white/5 transition">
+          Request New Access (Register)
+        </a>
+      </div>
     </form>
-    <div class="forgot-password">
-      <a href="/reset-password/">Forgot Password?</a>
+
+    <div class="mt-8 text-center space-y-4">
+      <a href="/reset-password/" class="text-[10px] font-bold text-slate-500 hover:text-indigo-400 uppercase tracking-widest transition">Forgot Credentials?</a>
+      <div class="flex items-center justify-center space-x-2">
+        <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+        <p class="text-[9px] font-bold text-slate-600 uppercase tracking-[0.3em]">Authorized Personnel Only</p>
+        <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+      </div>
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const images = [
       "{% static 'images/lib0.jpg' %}",
@@ -157,7 +153,17 @@
     }
 
     changeBackground();
-    setInterval(changeBackground, 20000);
+    setInterval(changeBackground, 15000);
+
+    // AUTO-DISMISS MESSAGES AFTER 5 SECONDS
+    setTimeout(function() {
+      const messages = document.querySelectorAll('.message-item');
+      messages.forEach(msg => {
+        msg.style.opacity = '0';
+        msg.style.transform = 'translateY(-10px)';
+        setTimeout(() => msg.remove(), 500);
+      });
+    }, 5000);
   </script>
 </body>
 </html>

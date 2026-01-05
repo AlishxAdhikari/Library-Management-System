@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+
+
 
 def home(request):
     return render(request, "home.html")  # Render home.html
@@ -118,6 +122,39 @@ def helpview(request):
 
 def contactView(request):
     return render(request, 'contact.html')
+    
+def baseveiw(request):
+    return render(request,'base.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password')
+        password2 = request.POST.get('confirm_password')
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match")
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists")
+            return redirect('register')
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password1
+        )
+        user.save()
+
+        messages.success(request, "User registered successfully")
+        return redirect('login')
+
+    return render(request, 'register.html')
+
+
 
 def user_login(request):
     if request.method == "POST":

@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Create Archive ID | LibPro LMS</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #020617;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow-x: hidden;
+      transition: background-image 1.5s ease-in-out;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.5) 0%, rgba(2, 6, 23, 0.95) 100%);
+      z-index: 1;
+    }
+
+    .register-glass {
+      position: relative;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 3rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .input-field {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: white;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .input-field:focus {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #818cf8;
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.15);
+      outline: none;
+    }
+
+    .btn-create {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      transition: all 0.3s ease;
+    }
+
+    .btn-create:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+      box-shadow: 0 12px 24px -8px #4f46e5;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="register-glass w-full max-w-lg p-10 lg:p-14 mx-4 my-10">
+    <div class="flex flex-col items-center mb-10 text-center">
+      <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
+        <span class="text-xl font-black text-white">L</span>
+      </div>
+      <h2 class="text-3xl font-extrabold tracking-tighter text-white">Register Archive ID</h2>
+      <p class="text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mt-2">New Librarian Onboarding</p>
+    </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message-item mb-6 p-4 rounded-2xl border flex items-center text-xs font-bold transition-all duration-500
+          {% if message.tags == 'success' %}
+            bg-emerald-500/10 border-emerald-500/20 text-emerald-400
+          {% else %}
+            bg-red-500/10 border-red-500/20 text-red-400
+          {% endif %}">
+          <span class="mr-2">
+            {% if message.tags == 'success' %}✅{% else %}⚠️{% endif %}
+          </span> 
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="space-y-5">
+      {% csrf_token %}
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="md:col-span-2">
+          <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Universal Username</label>
+          <input type="text" name="username" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="e.g. librarian_alpha" required>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Institutional Email</label>
+          <input type="email" name="email" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="name@libpro.core" required>
+        </div>
+
+        <div class="md:col-span-1">
+          <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Security Key</label>
+          <input type="password" name="password" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="••••••••" required>
+        </div>
+
+        <div class="md:col-span-1">
+          <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Confirm Key</label>
+          <input type="password" name="confirm_password" class="input-field w-full p-4 rounded-2xl text-sm" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <div class="pt-6">
+        <button type="submit" class="btn-create w-full py-5 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em]">
+          Initialize Librarian Profile
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-10 text-center">
+      <p class="text-slate-500 text-xs font-medium">Already have a registered ID?</p>
+      <a href="{% url 'login' %}" class="mt-2 inline-block text-[10px] font-black text-indigo-400 hover:text-white uppercase tracking-widest transition underline underline-offset-8">
+        Return to Secure Login
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      "{% static 'images/lib0.jpg' %}",
+      "{% static 'images/lib1.jpeg' %}",
+      "{% static 'images/lib2.jpeg' %}",
+      "{% static 'images/lib3.jpg' %}"
+    ];
+
+    function changeBackground() {
+      const bg = images[Math.floor(Math.random() * images.length)];
+      document.body.style.backgroundImage = `url('${bg}')`;
+    }
+
+    changeBackground();
+    setInterval(changeBackground, 15000);
+
+    // AUTO-DISMISS MESSAGES AFTER 5 SECONDS
+    setTimeout(function() {
+      const messages = document.querySelectorAll('.message-item');
+      messages.forEach(msg => {
+        msg.style.opacity = '0';
+        msg.style.transform = 'translateY(-10px)';
+        setTimeout(() => msg.remove(), 500);
+      });
+    }, 5000);
+  </script>
+</body>
+</html>

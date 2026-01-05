@@ -17,27 +17,28 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include,re_path
-from .views import  addBookView, addBook,  deleteBook,aboutView, helpview, contactView, user_login, user_logout, home
+from .views import  addBookView, addBook,  deleteBook,aboutView, helpview, contactView, user_login, user_logout, home,baseveiw,register
 from .views import viewBook, edit_book
 
 
 urlpatterns = [
-   path('', home, name='home'),
+   path('', baseveiw, name='base'),
    path('view-book/', viewBook, name='view-book'),
    path('add-book/',addBookView, name='add_book_view'),
    path("add-book/add/", addBook, name='add_book'),
+   path('home/',home,name='home'),
+    path('register/',register, name='register'),
+    path("edit-book/edit/", edit_book, name='edit_book'),
 
+    path('edit-book/delete/', deleteBook, name='delete-book'),
+    path('about/', aboutView, name='about'),
+    path('help/', helpview, name='help'),
+    path('contact/',contactView, name='contact'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('home/', home, name='home'),
 
-  path("edit-book/edit/", edit_book, name='edit_book'),
-
-  path('edit-book/delete/', deleteBook, name='delete-book'),
-  path('about/', aboutView, name='about'),
-  path('help/', helpview, name='help'),
-  path('contact/',contactView, name='contact'),
-  path('login/', user_login, name='login'),
-  path('logout/', user_logout, name='logout'),
-  path('home/', home, name='home'),
-]
+    ]
 
    
 

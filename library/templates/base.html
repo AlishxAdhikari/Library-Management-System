@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LibPro | Institutional Archive</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&family=Fraunces:ital,soft,wght@1,300;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root { --indigo-primary: #6366f1; --bg-dark: #020617; }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background-color: var(--bg-dark);
+        color: #ffffff;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Enhanced Background: Noise + Glow */
+    .bg-gradient-fixed {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
+        z-index: -1;
+    }
+    .bg-gradient-fixed::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+        pointer-events: none;
+    }
+
+    .snap-container {
+      height: 100vh;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    .snap-container::-webkit-scrollbar { display: none; }
+    
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 10%;
+      position: relative;
+    }
+
+    /* Neo-Glassmorphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2.5rem;
+      padding: 3rem;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Magnetic Button Styling */
+    .launch-btn {
+      background: #ffffff;
+      color: #000000;
+      font-weight: 800;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+      letter-spacing: 0.1em;
+    }
+    .launch-btn:hover {
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+      transform: translateY(-4px);
+      letter-spacing: 0.2em;
+    }
+
+    /* Cinematic Text Effects */
+    .title-reveal {
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 0.85;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .quote-font { font-family: 'Fraunces', serif; }
+
+    /* Animated Status Indicator */
+    .status-dot {
+        width: 8px; height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        box-shadow: 0 0 12px #10b981;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient-fixed" id="parallax-bg"></div>
+
+  <div class="snap-container">
+    
+    <section class="slide">
+      <div class="max-w-6xl">
+        <div class="flex items-center mb-6">
+            <span class="status-dot"></span>
+            <span class="text-indigo-400 font-bold tracking-[0.5em] text-[10px] uppercase">Core Engine v4.0 Active</span>
+        </div>
+        <h1 class="title-reveal mb-10" id="scramble-target">LIBPRO.</h1>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-12">
+            <p class="text-xl text-slate-400 max-w-xl font-light leading-relaxed">
+              Synthesizing institutional data into a seamless <span class="text-white">digital archive</span>. Engineered for reliability by Alish Adhikari.
+            </p>
+            <a href="{% url 'home' %}" class="launch-btn inline-block px-14 py-6 rounded-full uppercase text-xs">
+                Launch System
+            </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide bg-black/10">
+        <div class="max-w-5xl mx-auto text-center">
+            <p class="text-indigo-500 font-black text-[10px] tracking-widest uppercase mb-10">Historical Context</p>
+            <h2 class="quote-font text-5xl lg:text-8xl italic font-light mb-16 leading-tight">
+                "A library is not a luxury but one of the <span class="not-italic font-bold text-white underline decoration-indigo-500 underline-offset-8">necessities</span> of life."
+            </h2>
+            <div class="flex items-center justify-center space-x-4">
+                <div class="h-px w-12 bg-white/20"></div>
+                <p class="text-slate-500 font-bold uppercase tracking-[0.4em] text-xs">— Henry Ward Beecher</p>
+                <div class="h-px w-12 bg-white/20"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="mb-20">
+            <h2 class="text-6xl font-extrabold tracking-tighter">Community Voice.</h2>
+            <p class="text-slate-500 mt-4 text-lg">Integrated by the world's most demanding institutions.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card">
+                <p class="text-slate-300 italic mb-10 text-lg leading-relaxed">"The speed of LibPro is genuinely frightening. A masterpiece of backend logic."</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-xs shadow-lg shadow-indigo-500/20">SL</div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-widest">Senior Librarian</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Digital Research Hub</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <p class="text-slate-300 italic mb-10 text-lg leading-relaxed">"User experience at its peak. Our students adapted without a single tutorial."</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs shadow-lg">IT</div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-widest">IT Director</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Global University</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <p class="text-slate-300 italic mb-10 text-lg leading-relaxed">"A secure, scalable architecture that respects the sanctity of data."</p>
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-xs shadow-lg">AD</div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-widest">Dean</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Academic Affairs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide items-center text-center">
+        <h2 class="text-7xl lg:text-9xl font-extrabold mb-12 tracking-tighter opacity-10 absolute pointer-events-none">DEPLOY</h2>
+        <div class="relative z-10">
+            <h2 class="text-6xl font-extrabold mb-12 tracking-tighter">Ready to Begin?</h2>
+            <a href="{% url 'home' %}" class="launch-btn inline-block px-20 py-8 rounded-full uppercase text-sm mb-32">
+                Enter Terminal
+            </a>
+        </div>
+
+        <footer class="w-full max-w-7xl border-t border-white/10 pt-16 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-2">
+                    <h3 class="text-2xl font-black tracking-tighter mb-4 italic">LIBPRO.</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed max-w-sm uppercase tracking-widest font-bold">
+                        Created by Alish Adhikari & The Team. Engineering Excellence in Kathmandu, NP.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-white uppercase tracking-widest mb-6">Archive</p>
+                    <div class="flex flex-col space-y-3 text-xs font-bold text-slate-500">
+                        <a href="#" class="hover:text-indigo-400 transition">Global Index</a>
+                        <a href="#" class="hover:text-indigo-400 transition">Repository Status</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-white uppercase tracking-widest mb-6">Connect</p>
+                    <div class="flex flex-col space-y-3 text-xs font-bold text-slate-500">
+                        <a href="#" class="hover:text-indigo-400 transition">Instagram</a>
+                        <a href="#" class="hover:text-indigo-400 transition">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 pb-12 flex justify-between items-center text-[9px] font-bold text-slate-800 uppercase tracking-[0.6em]">
+                <span>&copy; 2026 LIBPRO ARCHIVE SYSTEMS</span>
+                <span>STATUS: OPERATIONAL</span>
+            </div>
+        </footer>
+    </section>
+
+  </div>
+
+  <script>
+    // Parallax Background
+    const bg = document.getElementById('parallax-bg');
+    window.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 50;
+        const y = (window.innerHeight / 2 - e.pageY) / 50;
+        bg.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+    });
+
+    // Text Scramble Effect for Title
+    const scramble = (id) => {
+        const el = document.getElementById(id);
+        const original = el.innerText;
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let iterations = 0;
+        
+        const interval = setInterval(() => {
+            el.innerText = el.innerText.split("").map((letter, index) => {
+                if(index < iterations) return original[index];
+                return chars[Math.floor(Math.random() * 26)];
+            }).join("");
+            
+            if(iterations >= original.length) clearInterval(interval);
+            iterations += 1/3;
+        }, 40);
+    };
+
+    window.onload = () => scramble('scramble-target');
+  </script>
+</body>
+</html>

@@ -1,323 +1,308 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Home | Book Record Management</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>LibPro LMS | Advanced Repository</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      position: relative;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    
+    .sidebar-glass {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
     }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.8);
-      z-index: -1;
-    }
-
-    .navbar {
-      background: linear-gradient(90deg, #D96F32 0%, #e67e22 50%, #3498db 100%);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 1rem 2rem;
-    }
-
-    .navbar-brand {
-      font-weight: 600;
-      font-size: 1.5rem;
-      color: #ffffff !important;
-    }
-
-    .nav-item {
-      margin-right: 1.5rem; /* Added spacing between navbar items */
-    }
-
-    .nav-link {
-      color: #ffffff !important;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+    
+    .search-bar {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
     }
-
-    .nav-link:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: #ffd700 !important;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    .search-bar:focus-within {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
     }
 
-    .dropdown-menu {
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    .stat-card {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .stat-card:hover { transform: translateY(-10px); border-color: rgba(99, 102, 241, 0.4); }
+
+    .text-gradient {
+      background: linear-gradient(to right, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .dropdown-menu a.dropdown-item {
-      color: #2c3e50 !important;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
+    .status-pulse {
+      display: inline-block; width: 8px; height: 8px;
+      background: #22c55e; border-radius: 50%;
+      margin-right: 8px; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
     }
 
-    .dropdown-menu a.dropdown-item:hover {
-      background-color: #f1c40f;
-      color: white !important;
-      transform: scale(1.02);
-      border-radius: 5px;
-    }
-
-    .dropdown-divider {
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .container {
-      max-width: 800px;
-      margin-top: 5rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-weight: 700;
-      color: #2c3e50;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    p {
-      color: #34495e;
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(45deg, #3498db, #2980b9);
-      border: none;
-      border-radius: 20px;
-      padding: 0.75rem 2rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(45deg, #2980b9, #1f618d);
-      transform: translateY(-2px);
-    }
-
-    .card-section, .nav-card-section {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding: 0 15px;
-    }
-
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      overflow: hidden;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .card-img-top {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card-title {
-      font-weight: 600;
-      color: #2c3e50;
-    }
-
-    .card-text {
-      color: #34495e;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-    }
+    /* Custom Scrollbar for Sidebar */
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
   </style>
 </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="{% url 'home' %}">📚 Book Record Management</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'add_book_view' %}">Add Book</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About us</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Hi, {{ user.username }}</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
-        {% endif %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
-            More
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'contact' %}">Contact</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'help' %}">Help</a>
-          </div>
-        </li>
-      </ul>
+<body class="bg-[#020617] text-slate-200 flex">
+
+  <aside class="fixed left-0 top-0 h-screen w-64 sidebar-glass z-[110] hidden lg:flex flex-col p-6">
+    <div class="mb-10 flex items-center space-x-2">
+      <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold">L</div>
+      <span class="text-xl font-black tracking-tighter">LIB<span class="text-indigo-500">PRO</span></span>
     </div>
-  </nav>
-  <div class="container">
-    <h1>Welcome to Book Record Management</h1>
-    <p>Manage your book collection with ease. View, add, edit, or delete books.</p>
-  </div>
-  <div class="card-section">
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/tab1.png' %}" class="card-img-top" alt="Classic Literature">
-          <div class="card-body">
-            <h5 class="card-title">Classic Literature</h5>
-            <p class="card-text">Explore timeless classics that have shaped literary history.</p>
-            <a href="{% url 'view-book' %}" class="btn btn-primary">Browse Classics</a>
+
+    <nav class="flex-1 space-y-2 text-sm font-medium sidebar-nav overflow-y-auto pr-2">
+      <a href="{% url 'home' %}" class="flex items-center space-x-3 p-3 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-600/20 transition group">
+        <span class="group-hover:scale-110 transition">🏠</span>
+        <span>Home Dashboard</span>
+      </a>
+      <a href="{% url 'view-book' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition group">
+        <span class="group-hover:scale-110 transition">📚</span>
+        <span>Browse Catalog</span>
+      </a>
+      <a href="{% url 'add_book_view' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition group">
+        <span class="group-hover:scale-110 transition">➕</span>
+        <span>Add New Volume</span>
+      </a>
+      <a href="{% url 'about' %}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-white/5 transition group">
+        <span class="group-hover:scale-110 transition">ℹ️</span>
+        <span>About Archive</span>
+      </a>
+      
+      <div class="pt-2">
+        <button onclick="toggleTools()" class="flex items-center justify-between w-full p-3 rounded-xl hover:bg-white/5 transition group text-slate-400">
+          <div class="flex items-center space-x-3">
+            <span class="group-hover:rotate-12 transition">📂</span>
+            <span>More Tools</span>
           </div>
+          <svg id="tool-arrow" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        
+        <div id="tools-menu" class="hidden flex-col space-y-1 mt-1 ml-4 border-l-2 border-indigo-500/20 pl-4">
+          <a href="{% url 'contact' %}" class="block p-2 text-slate-500 hover:text-indigo-400 text-xs transition font-bold">Contact Support</a>
+          <a href="{% url 'help' %}" class="block p-2 text-slate-500 hover:text-indigo-400 text-xs transition font-bold">System Help</a>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/MODERN.png' %}" class="card-img-top" alt="Modern Fiction">
-          <div class="card-body">
-            <h5 class="card-title">Modern Fiction</h5>
-            <p class="card-text">Dive into contemporary stories that captivate and inspire.</p>
-            <a href="{% url 'view-book' %}" class="btn btn-primary">Discover Fiction</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/tab3.jpg' %}" class="card-img-top" alt="Non-Fiction">
-          <div class="card-body">
-            <h5 class="card-title">Non-Fiction</h5>
-            <p class="card-text">Gain knowledge with our collection of insightful non-fiction.</p>
-            <a href="{% url 'view-book' %}" class="btn btn-primary">Explore Non-Fiction</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nav-card-section">
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/tab4.jpg' %}" class="card-img-top" alt="View All Books">
-          <div class="card-body">
-            <h5 class="card-title">View All Books</h5>
-            <p class="card-text">Browse your entire book collection in one place.</p>
-            <a href="{% url 'view-book' %}" class="btn btn-primary">View Books</a>
-          </div>
-        </div>
-      </div>
+    </nav>
+
+    <div class="mt-auto pt-6 border-t border-white/5">
       {% if user.is_authenticated %}
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/tab5.jpg' %}" class="card-img-top" alt="Add a New Book">
-          <div class="card-body">
-            <h5 class="card-title">Add a New Book</h5>
-            <p class="card-text">Expand your collection by adding new books.</p>
-            <a href="{% url 'add_book_view' %}" class="btn btn-primary">Add Book</a>
-          </div>
+      <div class="flex items-center space-x-3 p-2 bg-white/5 rounded-2xl border border-white/5">
+        <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-xs shadow-lg shadow-indigo-600/20">
+          {{ user.username|slice:":2"|upper }}
+        </div>
+        <div class="overflow-hidden">
+          <p class="text-xs font-bold truncate">Hi, {{ user.username }}</p>
+          <a href="{% url 'logout' %}" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase tracking-wider transition">Logout System</a>
         </div>
       </div>
       {% else %}
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/tab6.webp' %}" class="card-img-top" alt="Login">
-          <div class="card-body">
-            <h5 class="card-title">Login to Manage</h5>
-            <p class="card-text">Sign in to manage your book collection.</p>
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-          </div>
-        </div>
-      </div>
+      <a href="{% url 'login' %}" class="flex items-center justify-center w-full bg-white text-black py-4 rounded-xl font-bold text-xs hover:bg-indigo-600 hover:text-white transition-all shadow-xl">
+        SIGN IN TO MANAGE
+      </a>
       {% endif %}
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/contactus.jpg' %}" class="card-img-top" alt="About Us">
-          <div class="card-body">
-            <h5 class="card-title">About Us</h5>
-            <p class="card-text">Learn more about our mission and team.</p>
-            <a href="{% url 'about' %}" class="btn btn-primary">About Us</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/CONTACTUS.jpg' %}" class="card-img-top" alt="Contact">
-          <div class="card-body">
-            <h5 class="card-title">Contact</h5>
-            <p class="card-text">Get in touch with us for support or inquiries.</p>
-            <a href="{% url 'contact' %}" class="btn btn-primary">Contact</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="{% static 'images/help.jpg' %}" class="card-img-top" alt="Help">
-          <div class="card-body">
-            <h5 class="card-title">Help</h5>
-            <p class="card-text">Find answers to common questions and guides.</p>
-            <a href="{% url 'help' %}" class="btn btn-primary">Help</a>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  </aside>
+
+  <main class="flex-1 lg:ml-64 relative min-h-screen flex flex-col">
+    
+    <header class="sticky top-0 z-[100] px-8 py-4 backdrop-blur-md bg-[#020617]/80 flex items-center justify-between border-b border-white/5">
+      <div class="flex-1 max-w-xl">
+        <div class="search-bar rounded-xl px-4 py-2.5 flex items-center space-x-3">
+          <span class="text-slate-500 text-sm">🔍</span>
+          <input type="text" placeholder="Search archives, titles, or authors..." class="bg-transparent border-none outline-none text-sm w-full placeholder:text-slate-600 text-white">
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-6 ml-4">
+        <div class="hidden md:flex flex-col items-end border-r border-white/10 pr-6">
+          <span class="text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">Database v4.2</span>
+          <span class="text-[10px] flex items-center font-bold text-emerald-400"><span class="status-pulse"></span>SYSTEM ACTIVE</span>
+        </div>
+        <div class="text-right">
+            <p class="text-[10px] font-black text-slate-500">2026 ARCHIVE</p>
+            <p class="text-xs font-black text-indigo-400">LIBPRO.CORE</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="p-8 lg:p-12 flex-1">
+      
+      <section id="home" class="mb-24 mt-10">
+        <div class="max-w-4xl" data-aos="fade-up">
+          <div class="flex items-center space-x-2 mb-4">
+             <span class="px-3 py-1 bg-indigo-600/20 text-indigo-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-indigo-600/30">LMS Platform</span>
+          </div>
+          <h1 class="text-6xl lg:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
+            Manage Your <br><span class="text-gradient" id="typewriter"></span>
+          </h1>
+          <p class="text-xl text-slate-400 max-w-2xl leading-relaxed mb-12 font-medium">
+            The next generation of library management. Seamlessly index, track, and curate your institutional repository with surgical precision.
+          </p>
+          <div class="flex flex-wrap gap-5">
+            <a href="{% url 'view-book' %}" class="bg-indigo-600 hover:bg-indigo-500 px-10 py-5 rounded-2xl font-black shadow-2xl shadow-indigo-600/40 transition-all hover:-translate-y-1 flex items-center uppercase text-xs tracking-widest">
+                Launch Inventory <span class="ml-3">→</span>
+            </a>
+            <a href="{% url 'add_book_view' %}" class="bg-white/5 hover:bg-white/10 border border-white/10 px-10 py-5 rounded-2xl font-black transition-all hover:-translate-y-1 uppercase text-xs tracking-widest">
+                Quick Catalog
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24" id="stats">
+        <div class="stat-card p-10 rounded-[2.5rem]" data-aos="fade-up">
+          <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center text-indigo-500 mb-6 font-bold text-xl">Σ</div>
+          <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Total Indexed</p>
+          <h3 class="text-5xl font-black tracking-tighter">12,402</h3>
+        </div>
+        <div class="stat-card p-10 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500 mb-6 font-bold text-xl">G</div>
+          <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Archived Genres</p>
+          <h3 class="text-5xl font-black tracking-tighter">48</h3>
+        </div>
+        <div class="stat-card p-10 rounded-[2.5rem]" data-aos="fade-up" data-aos-delay="200">
+          <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 mb-6 font-bold text-xl">✓</div>
+          <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Server Uptime</p>
+          <h3 class="text-5xl font-black tracking-tighter">99.9%</h3>
+        </div>
+      </div>
+
+      <section id="categories" class="mb-24">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h2 class="text-4xl font-black tracking-tighter" data-aos="fade-right">Repository Sectors</h2>
+                <p class="text-slate-500 mt-2 font-medium">Explore the organized depths of the archive.</p>
+            </div>
+            <a href="{% url 'view-book' %}" class="text-indigo-400 font-bold text-sm hover:underline">View All Sectors</a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          
+          <div class="group relative aspect-[3/4] rounded-[40px] overflow-hidden border border-white/10 bg-slate-900" data-aos="zoom-in-up">
+            <img src="{% static 'images/tab1.png' %}" class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 group-hover:opacity-50 transition duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent"></div>
+            <div class="absolute bottom-0 p-10 w-full">
+              <span class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.4em]">Sector A-1</span>
+              <h4 class="text-3xl font-black mb-3 tracking-tighter">Classic Literature</h4>
+              <p class="text-sm text-slate-400 mb-8 font-medium">Timeless manuscripts and historical first editions.</p>
+              <a href="{% url 'view-book' %}" class="block w-full text-center bg-white text-black py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all">Open Archive</a>
+            </div>
+          </div>
+
+          <div class="group relative aspect-[3/4] rounded-[40px] overflow-hidden border border-white/10 bg-slate-900" data-aos="zoom-in-up" data-aos-delay="100">
+            <img src="{% static 'images/MODERN.png' %}" class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 group-hover:opacity-50 transition duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent"></div>
+            <div class="absolute bottom-0 p-10 w-full">
+              <span class="text-[10px] font-black text-purple-400 uppercase tracking-[0.4em]">Sector B-4</span>
+              <h4 class="text-3xl font-black mb-3 tracking-tighter">Modern Fiction</h4>
+              <p class="text-sm text-slate-400 mb-8 font-medium">Contemporary bestsellers and award-winning prose.</p>
+              <a href="{% url 'view-book' %}" class="block w-full text-center bg-white text-black py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all">Open Archive</a>
+            </div>
+          </div>
+
+          <div class="group relative aspect-[3/4] rounded-[40px] overflow-hidden border border-white/10 bg-slate-900" data-aos="zoom-in-up" data-aos-delay="200">
+            <img src="{% static 'images/tab3.jpg' %}" class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 group-hover:opacity-50 transition duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent"></div>
+            <div class="absolute bottom-0 p-10 w-full">
+              <span class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em]">Sector C-9</span>
+              <h4 class="text-3xl font-black mb-3 tracking-tighter">Non-Fiction</h4>
+              <p class="text-sm text-slate-400 mb-8 font-medium">Scientific journals, historical logs, and research.</p>
+              <a href="{% url 'view-book' %}" class="block w-full text-center bg-white text-black py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all">Open Archive</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="mt-auto py-12 px-12 border-t border-white/5 bg-slate-950/30 flex flex-col md:flex-row justify-between items-center text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 bg-indigo-500 rounded-full shadow-[0_0_10px_#6366f1]"></div>
+        <p>&copy; 2026 LibPro Architecture System</p>
+      </div>
+      <div class="flex space-x-10 mt-6 md:mt-0">
+        <a href="{% url 'contact' %}" class="hover:text-white transition-colors">Contact</a>
+        <a href="{% url 'help' %}" class="hover:text-white transition-colors">Documentation</a>
+        <a href="{% url 'about' %}" class="hover:text-white transition-colors">Alish Adhikari & Team</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    const images = [
-      "{% static 'images/lib0.jpg' %}",
-      "{% static 'images/lib1.jpeg' %}",
-      "{% static 'images/lib2.jpeg' %}",
-      "{% static 'images/lib3.jpg' %}"
-    ];
-    function changeBackground() {
-      const bg = images[Math.floor(Math.random() * images.length)];
-      document.body.style.backgroundImage = `url('${bg}')`;
+    // Initialize AOS
+    AOS.init({ duration: 1000, once: true, offset: 100 });
+
+    // Accordion Sidebar Logic
+    function toggleTools() {
+      const menu = document.getElementById('tools-menu');
+      const arrow = document.getElementById('tool-arrow');
+      
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        arrow.style.transform = 'rotate(0deg)';
+      }
     }
-    changeBackground();
-    setInterval(changeBackground, 20000);
+
+    // High-End Typewriter Effect
+    const textElement = document.getElementById('typewriter');
+    const words = ["Management System.", "Digital Repository.", "Knowledge Vault.", "Global Archive."];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentWord = words[wordIndex];
+      if (isDeleting) {
+        textElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        textElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        isDeleting = true;
+        setTimeout(type, 2000); // Pause at end
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(type, 500); // Pause before next word
+      } else {
+        setTimeout(type, isDeleting ? 70 : 150);
+      }
+    }
+    
+    // Kick off animation on load
+    window.onload = type;
   </script>
 </body>
-
 </html>
